@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Economics Prediction</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+
+		<link rel="stylesheet" href="./css/bootstrap.css" media="screen">
+		<link rel="stylesheet" href="./css/bootswatch.min.css">
+		<!-- for line graph -->
+		<link href="./line/stylesheet.css" rel="stylesheet" type="text/css">
+
+	</head>
+	<body>
+		<style type="text/css">
+			.country {
+				fill: none;
+				stroke: steelblue;
+				cursor: pointer;
+			}
+
+			#step1-nav, #graph, #step1-instructions-btn, #step2, #step3, #banner {
+				display: none;
+			}
+
+			.equation {
+				text-align: center;
+				font-size: small;
+				margin-top: 7px;
+				height: 30px;
+				background: none;
+				width: 45px;
+				margin-left: 10px;
+			}
+
+			#equation h5 {
+				margin-left: 10px;
+				/*width: 60px;*/
+				/*margin:0px;*/
+			}
+
+			#step3 {
+				margin-top: 30px;
+			}
+
+			table {
+				background: none;
+			}
+
+			#error {
+				margin-top: 24px;
+				font-size: 300px
+			}
+
+		</style>
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a href="../index.html" class="navbar-brand">Economics Prediction</a>
+				</div>
+				<div class="navbar-collapse collapse" id="navbar-main">
+
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a target="_blank">About Us</a>
+						</li>
+						<li>
+							<a target="_blank">Other Projects</a>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- Instructions -->
+		<!-- Step 1
+		================================================== -->
+		<div id='instructions' class="container">
+			<div class="page-header">
+				<div class="row">
+					<h1>Introduction</h1>
+					<p class="lead">
+						The purpose of this visualization is to show you how difficult it is to fit a multi-linear regression model on a economic indicator time series manually.
+						When you are ready to build your first prediction model, click on the image to proceed!
+					</p>
+					<center>
+						<br>
+						<img src="./img/bg1.jpg" style="width:800px; cursor:pointer">
+					</center>
+				</div>
+			</div>
+		</div>
+
+		<!-- Step 1
+		================================================== -->
+		<div class="container">
+			<div id='step1-container'>
+				<div class="page-header" id="banner">
+					<div class="row">
+						<div>
+							<h1>Step1</h1>
+							<p class="lead">
+								Choose an economic indicator you want to predict.
+								<br>
+								When the map appears, feel free to click the 'play' button to see the heatmap change over time.
+							</p>
+							<br>
+							<p id='step1'></p>
+
+						</div>
+					</div>
+				</div>
+
+				<!-- Navbar
+				================================================== -->
+				<div id="step1-nav" class="row">
+					<div class="col-lg-12">
+
+						<div class="navbar navbar-default">
+							<div class="navbar-header">
+
+							</div>
+							<div class="navbar-collapse collapse navbar-responsive-collapse">
+								<ul class="nav navbar-nav">
+									<li class="active">
+										<a id="slider-value">1990</a>
+									</li>
+								</ul>
+
+								<!-- <form class="navbar-form navbar-left"> -->
+
+								<div class = "col-md-4"  >
+									<div class = "row">
+										<!-- <h5  style="text-align:center; margin-bottom:5px; margin-right:10px">1990</h5> -->
+										<br>
+										<div  id="slider" ></div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<button id="controller-btn" type="button" class="btn btn-default btn-sm" style = "margin-top: 10px;margin left:10px">
+										Play
+									</button>
+								</div>
+								<!-- <form class = "navbar-form navbar-left col-md-3">
+								<input type="text" class="form-control col-lg-8" placeholder="Search">
+								</form> -->
+								<div id='step1-instructions-btn' class="col-md-3 navbar-right">
+									<button type="button" class="btn pull-right btn-success btn-sm" style = "margin-top: 10px;margin-right:10px" >
+
+									</button>
+								</div>
+								<ul class = "nav navbar-nav navbar-right col-md-3" >
+									<!-- <ul class="nav navbar-nav navbar-right"> -->
+									<li class='pull-right'>
+										<a id='step1-instructions'>Click on a country... </a>
+									</li>
+								</ul>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<!-- map
+				================================================== -->
+				<center>
+					<div class="col-lg-12" id="graph"></div>
+				</center>
+
+			</div>
+
+			<div class="page-header" >
+				<!-- Step 2
+				================================================== -->
+				<div class="row" id='step2'>
+					<div>
+						<h1>Step2</h1>
+						<p class="lead">
+							Now you will predict your chosen indicator using a linear model consisting of the other unused indicators. Click on the coefficients to edit them and then hit Enter. Your goal is to tinker with the coefficients until the red line (prediction) is as close to the blue line (actual) as possible. Once you are satisfied, <u>scroll down and click the submit button.</u><br> The line graph has scroll zoom, tooltip, animation and other cool stuff enabled. Click on the legend to see a surprise!
+						</p>
+						<br>
+
+						<div class="row form-group">
+							<table>
+								<tr>
+									<h4 id='equation-title' style="margin-left:15px"></h4>
+								</tr>
+								<tr id="equation">
+									<!-- <td>
+									<input type="text" class="form-control equation" placeholder="1">
+									</td><td><h4>x <span class="label label-danger">Danger</span> + </h4></td>
+									<td>
+									<input type="text" class="form-control equation" placeholder="1">
+									</td><td><h4> x <span class="label label-danger">Danger</span></h4></td> -->
+
+							</table>
+
+						</div>
+
+						<div id="step2-nav" class="row">
+							<center>
+								<div class="col-lg-12" id='line'></div>
+							</center>
+						</div>
+						<div class='row'>
+							<center>
+								<button id='submit-model' type="button" class="btn btn-success">
+									Submit Prediction Model!
+								</button>
+							</center>
+						</div>
+					</div>
+				</div>
+
+				<!-- step 3
+				================================================== -->
+				<div class="row" id='step3'>
+					<div>
+						<h2>The mean percentage error of your model is... </h2>
+					</div>
+					<center>
+						<div id="error">
+							44
+						</div>
+					</center>
+				</div>
+
+				<footer>
+					<div class = 'row'></div>
+				</footer>
+
+			</div>
+
+			<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+			<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+			<script src="./libs/bootstrap.min.js"></script>
+			<script src="./libs/bootswatch.js"></script>
+
+			<!-- d3 javascript -->
+			<script src="http://d3js.org/d3.v3.min.js"></script>
+			<script src="http://d3js.org/queue.v1.min.js"></script>
+			<script src="http://d3js.org/topojson.v1.min.js"></script>
+			<script type="text/javascript" src="./libs/jquery.tipsy.js"></script>
+
+			<!-- own javascript -->
+			<script src="./index.js"></script>
+	</body>
+</html>

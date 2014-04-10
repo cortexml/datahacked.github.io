@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="http://d3js.org/queue.v1.min.js"></script>
+        <script src="http://d3js.org/topojson.v1.min.js"></script>
+        <script src="../libs/FileSaver.js"></script>
+
+        <script>
+            var saveToFile = function(object, filename) {
+                var blob, blobText;
+                blobText = [JSON.stringify(object)];
+                blob = new Blob(blobText, {
+                    type : "text/plain;charset=utf-8"
+                });
+                saveAs(blob, filename);
+            }
+            // convert csv to json format for better machine readability
+            var json = {}
+            d3.csv("./data/CountryData.csv", function(data) {
+
+                // utils
+                data.map(function(row) {
+                    if (json[row.Country] == null) {
+                        json[row.Country] = {}
+                    }
+                    json[row.Country][row.Variable] = {}
+
+                    var dates = d3.keys(row).filter(function(k) {
+                        return k != 'Country' && k != 'Variable'
+                    }).filter(function(k) {
+                        return row[k] != ""
+                    }).map(function(k) {
+
+                        return json[row.Country][row.Variable][k] = row[k]
+                    })
+                })
+                // save the json file
+                saveToFile(json, 'data.json')
+            })
+
+        </script>
+
+    </body>
+</html>
