@@ -8,7 +8,11 @@ Github Project Title
 datahacked.github.io
 
 Credits
-The line graph code is adapted from https://gist.github.com/Matthew-Weber/5645518. More information about what is my code and which part is adapted is detailed in the process book.
+The line graph code is adapted from 
+
+Matthew Weber, 2013, d3 multi series line graph, https://gist.github.com/Matthew-Weber/5645518 
+
+More information about what is my code and which part is adapted is detailed in the process book.
 
 Info
 Libs folder - contains javascript libraries including bootstrap, query ui
