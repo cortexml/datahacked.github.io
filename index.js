@@ -680,7 +680,7 @@ function plotError(pct) {
     });
 
     var animateTime = 2000
-    var step = pct / 200
+    var step = pct / 100
 
     var num = 0;
     function update() {
